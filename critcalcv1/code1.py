@@ -3,7 +3,7 @@
 stren=10
 
 dext=10
-
+# i am a comment
 agil=10
 
 stam=10

@@ -1,81 +1,98 @@
-#adding this to try github commit
+# This program calculates the critical hit chance of players in EQ Classless custom server.
+# Written by Dingus, Jan 2020
 
-stren=10
+# These are variables in use
+stren = 10
+dext = 10
+agil = 10
+stam = 10
+intel = 10
+wisd = 10
+char = 10
+mainstat = 0
+mainstatchoice = 0
 
-dext=10
-# i am a comment
-agil=10
+# These variables are not in use, yet...
 
-stam=10
+# stattotal = stren + dext + agil + stam + intel + wisd + char
+# fastcast = 0
+# sixtycrit = 0
 
-intel=10
+# Here is the formulas we are using. These were confirmed by Ailia, a Classless developer, on Discord on Jan 9th, 2020.
+# critrate = dext / (1.33 * mainstat + dext + agil + (0.9 * char))
 
-wisd=10
+# SECTION - This is the welcome and user input section
 
-char=10
+print('Welcome to D4C: Dinguses Crit Chance Calculator for Classless.')
 
-mainstat=0
+print('This tool will tell you what your chance to hit critically is. Please type your primary stat:')
 
-mainstatchoice=0
+# Offers users a list of input options
 
-stattotal=stren+dext+agil+stam+intel+wisd+char
+mainstatlist = ["strength", "intelligence", "wisdom"]
 
-#critrate = dext / ( 1.33 * mainstat + dext + agil + ( 0.9 * char ) )
+print(mainstatlist[0:4])
+mainstatchoice = input()
 
-#critpercent=critrate * 100
+# If 'Strength' is input, asks users to input their STR value, and sets that as the Main Stat for the critical hit formula
 
-fastcast=0
+if mainstatchoice == (str('strength')):
+    print('Your main stat is Strength. You are so stronk.')
+    print('Please enter your Strength total')
+    stren = input()
+    mainstat = stren
 
-sixtycrit=0
+# If 'Intelligence' is input, asks users to input their INT value, and sets that as the Main Stat for the critical hit formula
 
-print ('Welcome to D4C: Dinguses Crit Chance Calculator for Classless.')
+elif mainstatchoice == (str('intelligence')):
+    print('Your main stat is Intelligence. You should have written your own calculator.')
+    print('Please enter your Intelligence total')
+    intel = input()
+    mainstat = intel
 
-mainstatlist= ["Strength", "Intelligence", "Wisdom"]
+# If 'Wisdom' is input, asks users to input their WIS value, and sets that as the Main Stat for the critical hit formula
 
-print ('This tool will tell you what your chance to hit critically is. Please choose your primary stat:')
-print (mainstatlist[0:4])
-mainstatchoice=input()
-if mainstatchoice==(str('strength')):
-    print ('Your main stat is Strength. You are so stronk.')
-    print ('Please enter your Strength value')
-    stren=input()
-    mainstat=stren
+elif mainstatchoice == (str('wisdom')):
+    print('Your main stat is Wisdom. Please get back to healing. Your group needs you.')
+    print('Please enter your Wisdom total')
+    wisd = input()
+    mainstat = wisd
 
-elif mainstatchoice==(str('intelligence')):
-    print ('Your main stat is Intelligence. You should have written your own calculator.')
-    print ('Please enter your Intelligence  value')
-    intel=input()
-    mainstat=intel
-        
-elif mainstatchoice==(str('wisdom')):
-    print ('Your main stat is Wisdom. Please get back to healing. Your group needs you.')
-    print ('Please enter your Wisdom value')
-    wiinput()
-    mainstat=wisd
+# Unknown inputs break the program currently
 
 else:
-    print ('You have broken this program. Please run it again.')
+    print('Invalid input. Please enter \'Strength\' \'Intelligence\' or \'Wisdom\'')
 
-print ('I will also need to know your Dexterirty, Agility, and Charisma values. Please enter your Dexterity')
-dext=input()
-print ('Your Dexterity is ' + str(dext))
+# Asks the user to input their DEX, AGI, and CHA stat counts, which are required for the critical hit formula
 
-print('Please enter your Agility value?')
-agil=input()
-print ('Your Agility is ' + str(agil))
+print('I will also need to know your Dexterity, Agility, and Charisma values.')
+print('Please enter your Dexterity total')
+dext = input()
+print('Your Dexterity is ' + str(dext))
 
-print('What is your Charisma?')
-char=input()
-print ('Your Charisma is ' + str(char))
+print('Please enter your Agility total')
+agil = input()
 
-print ('You have ' + str(stren) + ' Strength.')
-print ('You have ' + str(dext) + ' Dexterity.')
-print ('You have ' + str(agil) + ' Agility.')
-print ('You have ' + str(char) + ' Charisma.')
-print ('Your main stat, ' + str(mainstatchoice) + ', is ' + str(mainstat))
+print('Please enter yout Charisma total')
+char = input()
 
-critrate = float ( dext ) / ( 1.33 * float ( mainstat ) + float ( dext ) + float ( agil ) + ( 0.9 * float( char ) ) )
+# Shows the user their stat distribution as used by the critical hit formula
 
-critpercent=critrate * 100
+print('You have ' + str(stren) + ' Strength.')
+print('You have ' + str(dext) + ' Dexterity.')
+print('You have ' + str(agil) + ' Agility.')
+print('You have ' + str(char) + ' Charisma.')
+print('Your main stat, ' + str(mainstatchoice) + ', is ' + str(mainstat))
 
-print('Given your current stat allocation, your chance to strike critically with skill, spells and abilities using your main stat is ' + str(critpercent))
+# Computes the critical hit formula
+
+critrate = float(dext) / (1.33 * float(mainstat) + float(dext) + float(agil) + (0.9 * float(char)))
+
+# Sets the critical hit rate as a percentage
+
+critpercent = critrate * 100
+
+# Tells the user their given critical hit chance using their input main stat and stat distribution
+
+print('Given your current stat allocation, your chance to strike critically with skills, spells and abilities that use ' + str(mainstatchoice) + ' for scaling is:')
+print(str(critpercent))
